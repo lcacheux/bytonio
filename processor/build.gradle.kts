@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "net.cacheux.bytonio"
-version = "0.0.1-test"
+version = "0.0.1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
