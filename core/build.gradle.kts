@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    id("maven-publish")
+    alias(libs.plugins.mavenPublish)
 }
 
 group = "net.cacheux.bytonio"
@@ -87,42 +87,34 @@ kotlin {
 
 }
 
-publishing {
-    repositories {
-        maven {
-            url = uri(layout.buildDirectory.dir("release"))
-        }
-    }
+mavenPublishing {
+    publishToMavenCentral()
 
-    publications {
-        withType<MavenPublication> {
-            groupId = "net.cacheux.bytonio"
-            artifactId = "bytonio-$artifactId"
-            version = "0.0.1"
+    signAllPublications()
 
-            pom {
-                name = "Bytonio Core"
-                description = "Generate serializers and deserializers for binary formats"
-                url = "https://github.com/lcacheux/bytonio"
-                licenses {
-                    license {
-                        name = "The Apache License, Version 2.0"
-                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
-                    }
-                }
-                developers {
-                    developer {
-                        id = "lcacheux"
-                        name = "Leo Cacheux"
-                        email = "leo@cacheux.net"
-                    }
-                }
-                scm {
-                    connection = "scm:git:https://github.com/lcacheux/bytonio.git"
-                    developerConnection = "scm:git:ssh://github.com/lcacheux/bytonio.git"
-                    url = "https://github.com/lcacheux/bytonio"
-                }
+    coordinates(group.toString(), "bytonio-core", version.toString())
+
+    pom {
+        name = "Bytonio Core"
+        description = "Generate serializers and deserializers for binary formats"
+        url = "https://github.com/lcacheux/bytonio"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
             }
+        }
+        developers {
+            developer {
+                id = "lcacheux"
+                name = "Leo Cacheux"
+                email = "leo@cacheux.net"
+            }
+        }
+        scm {
+            connection = "scm:git:https://github.com/lcacheux/bytonio.git"
+            developerConnection = "scm:git:ssh://github.com/lcacheux/bytonio.git"
+            url = "https://github.com/lcacheux/bytonio"
         }
     }
 }

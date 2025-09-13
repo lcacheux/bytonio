@@ -1,8 +1,12 @@
 plugins {
     id("java-library")
-    id("maven-publish")
+    alias(libs.plugins.mavenPublish)
     alias(libs.plugins.jetbrainsKotlinJvm)
 }
+
+group = "net.cacheux.bytonio"
+version = "0.0.1"
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -26,45 +30,34 @@ dependencies {
     testImplementation(libs.mockk)
 }
 
-publishing {
-    repositories {
-        maven {
-            url = uri(layout.buildDirectory.dir("release"))
+mavenPublishing {
+    publishToMavenCentral()
+
+    signAllPublications()
+
+    coordinates(group.toString(), "bytonio-processor", version.toString())
+
+    pom {
+        name = "Bytonio Processor"
+        description = "Generate serializers and deserializers for binary formats"
+        url = "https://github.com/lcacheux/bytonio"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
         }
-    }
-
-    publications {
-        create<MavenPublication>("mavenPublish") {
-            groupId = "net.cacheux.bytonio"
-            artifactId = "bytonio-processor"
-            version = "0.0.1"
-            afterEvaluate {
-                from(components["kotlin"])
+        developers {
+            developer {
+                id = "lcacheux"
+                name = "Leo Cacheux"
+                email = "leo@cacheux.net"
             }
-
-            pom {
-                name = "Bytonio Processor"
-                description = "Generate serializers and deserializers for binary formats"
-                url = "https://github.com/lcacheux/bytonio"
-                licenses {
-                    license {
-                        name = "The Apache License, Version 2.0"
-                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
-                    }
-                }
-                developers {
-                    developer {
-                        id = "lcacheux"
-                        name = "Leo Cacheux"
-                        email = "leo@cacheux.net"
-                    }
-                }
-                scm {
-                    connection = "scm:git:https://github.com/lcacheux/bytonio.git"
-                    developerConnection = "scm:git:ssh://github.com/lcacheux/bytonio.git"
-                    url = "https://github.com/lcacheux/bytonio"
-                }
-            }
+        }
+        scm {
+            connection = "scm:git:https://github.com/lcacheux/bytonio.git"
+            developerConnection = "scm:git:ssh://github.com/lcacheux/bytonio.git"
+            url = "https://github.com/lcacheux/bytonio"
         }
     }
 }
