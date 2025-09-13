@@ -1,0 +1,32 @@
+[versions]
+agp = "8.13.0"
+junit = "4.13.2"
+kotlin = "2.1.21"
+runner = "1.7.0"
+core = "1.7.0"
+kotlinpoet = "2.2.0"
+compiletesting = "1.6.0"
+
+[libraries]
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+ksp-symbolProcessing = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version = "2.1.21-2.0.1" }
+kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinpoet" }
+kotlinpoet-ksp = { group = "com.squareup", name = "kotlinpoet-ksp", version.ref = "kotlinpoet" }
+
+#Testing
+junit = { module = "junit:junit", version.ref = "junit" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+compiletesting = { group = "com.github.tschuchortdev", name = "kotlin-compile-testing", version.ref = "compiletesting" }
+compiletesting-ksp = { group = "com.github.tschuchortdev", name = "kotlin-compile-testing-ksp", version.ref = "compiletesting" }
+mockk = { group = "io.mockk", name = "mockk", version = "1.14.5" }
+
+[plugins]
+ksp = { id = "com.google.devtools.ksp", version = "2.1.21-2.0.1" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
