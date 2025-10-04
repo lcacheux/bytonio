@@ -84,6 +84,10 @@ kotlin {
 
 }
 
+ksp {
+    arg("bytonio.debugTree", "yes")
+}
+
 dependencies {
     add("kspCommonMainMetadata", project(":processor"))
     add("kspJvm", project(":processor"))

@@ -7,6 +7,8 @@ class BytonioOptions {
     var packageName: String = BYTONIO_PACKAGE_NAME
     var defaultDataSizeFormat: DataSizeFormat = DataSizeFormat.INT
     var defaultByteOrder: Order? = null
+
+    var generateDebugTree: Boolean = false
 }
 
 fun Map<String, String>.toBytonioOptions() =
@@ -26,6 +28,10 @@ fun Map<String, String>.toBytonioOptions() =
                 it.startsWith("big", ignoreCase = true) -> Order.BIG_ENDIAN
                 else -> null
             }
+        }
+
+        this["bytonio.debugTree"]?.let {
+            options.generateDebugTree = it.isNotBlank()
         }
     }
 

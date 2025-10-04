@@ -40,7 +40,7 @@ fun buildToByteArrayExtension(clazz: KSClassDeclaration, logger: KSPLogger): Fun
 }
 
 fun buildExtensions(types: Sequence<KSClassDeclaration>, logger: KSPLogger): FileSpec {
-    val fileBuilder = FileSpec
+    return FileSpec
         .builder(bytonioOptions.packageName, "BytonioExtensions")
         .addFunctions(
             types.mapNotNull {
@@ -58,6 +58,5 @@ fun buildExtensions(types: Sequence<KSClassDeclaration>, logger: KSPLogger): Fil
                     buildToByteArrayExtension(it, logger)
             }.toList()
         )
-
-    return fileBuilder.build()
+        .build()
 }
