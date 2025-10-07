@@ -49,7 +49,6 @@ fun buildDebugTreeMethod(clazz: KSClassDeclaration, logger: KSPLogger) =
             .returns(String::class)
             .apply {
                 addStatement("val stringResult = buildString {")
-                //addStatement("  repeat(depth) { append(\"  \") }")
                 addStatement("  append(\"${clazz.simpleName.asString()}:\\n\")")
                 constructor.parameters.forEach { param ->
                     addStatement("  repeat(depth + 1) { append(\"  \") }")

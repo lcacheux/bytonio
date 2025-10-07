@@ -2,6 +2,7 @@ package net.cacheux.bytonio.demo
 
 import bytonio.debugTree
 import net.cacheux.bytonio.utils.byteArrayOf
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ObjectWithNullablesTest {
@@ -14,6 +15,23 @@ class ObjectWithNullablesTest {
             optionalData = TestObject(13, 37, byteArrayOf(0x23, 0x34)),
             optionalContent = byteArrayOf(0xff, 0xfe, 0xfd, 0xfc, 0xfb, 0xfa)
         )
+
+        assertTrue(obj.debugTree().contains("""
+ObjectWithNullables:
+  index: 0000000C
+  data: TestStandardClass:
+    index: 00000004
+    type: 0005
+    data: 111213
+
+  content: 8899AABB
+  optionalData: TestObject:
+    index: 0000000D
+    type: 0025
+    data: 2334
+
+  optionalContent: FFFEFDFCFBFA
+        """.trimIndent()))
     }
 
     @Test
@@ -24,6 +42,17 @@ class ObjectWithNullablesTest {
             content = byteArrayOf(0x88, 0x99, 0xaa, 0xbb)
         )
 
-        println(obj.debugTree())
+        assertTrue(obj.debugTree().contains("""
+ObjectWithNullables:
+  index: 0000000C
+  data: TestStandardClass:
+    index: 00000004
+    type: 0005
+    data: 111213
+
+  content: 8899AABB
+  optionalData: null
+  optionalContent: null
+        """.trimIndent()))
     }
 }

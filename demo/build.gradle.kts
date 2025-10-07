@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
@@ -44,6 +46,7 @@ kotlin {
 
     sourceSets {
         commonMain {
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(project(":core"))
@@ -90,12 +93,15 @@ ksp {
 
 dependencies {
     add("kspCommonMainMetadata", project(":processor"))
-    add("kspJvm", project(":processor"))
-    add("kspAndroid", project(":processor"))
 }
 
 afterEvaluate {
     tasks.getByName("prepareAndroidMainArtProfile").apply {
-        dependsOn("kspAndroidMain")
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+    tasks.withType(KotlinCompilationTask::class).configureEach {
+        if (name != "kspCommonMainKotlinMetadata") {
+            dependsOn("kspCommonMainKotlinMetadata")
+        }
     }
 }
