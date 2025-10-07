@@ -50,20 +50,29 @@ class BytonioProcessor(
 
         logger.info("BytonioProcessor: Found ${validSymbols.count()} classes annotated with @DataObject")
 
+        val dependencies = Dependencies(aggregating = true, *validSymbols.mapNotNull { it.containingFile }.toList().toTypedArray())
+
         buildSerializers(validSymbols, logger).writeTo(
             codeGenerator = codeGenerator,
-            dependencies = Dependencies(aggregating = true, *validSymbols.mapNotNull { it.containingFile }.toList().toTypedArray()),
+            dependencies = dependencies,
         )
 
         buildDeserializers(validSymbols, logger).writeTo(
             codeGenerator = codeGenerator,
-            dependencies = Dependencies(aggregating = true, *validSymbols.mapNotNull { it.containingFile }.toList().toTypedArray()),
+            dependencies = dependencies,
         )
 
         buildExtensions(validSymbols, logger).writeTo(
             codeGenerator = codeGenerator,
-            dependencies = Dependencies(aggregating = true, *validSymbols.mapNotNull { it.containingFile }.toList().toTypedArray()),
+            dependencies = dependencies,
         )
+
+        if (bytonioOptions.generateDebugTree) {
+            buildDebugTreeSource(validSymbols, logger).writeTo(
+                codeGenerator = codeGenerator,
+                dependencies = dependencies,
+            )
+        }
 
         invoked = true // Mark as invoked to avoid reprocessing in this simple example
 

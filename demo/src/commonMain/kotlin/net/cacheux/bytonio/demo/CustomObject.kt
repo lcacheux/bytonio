@@ -7,6 +7,8 @@ import net.cacheux.bytonio.annotations.Deserializer
 import net.cacheux.bytonio.annotations.Serializer
 import net.cacheux.bytonio.utils.ByteArrayReader
 import net.cacheux.bytonio.utils.ByteArrayWriter
+import net.cacheux.bytonio.utils.asByteArray
+import net.cacheux.bytonio.utils.toHexString
 
 @DataObject
 @Serializer(CustomSerializer::class)
@@ -17,6 +19,15 @@ data class CustomObject(
 ) {
     //fun getBinarySize() = CustomSerializer.getBinarySize(this)
     fun toByteArray() = CustomSerializer.toByteArray(this)
+
+    fun debugTree(depth: Int = 0) = buildString {
+        repeat(depth) { append("  ") }
+        append("CustomObject: \n")
+        repeat(depth + 1) { append("  ") }
+        append("index: ${index.asByteArray().toHexString()}\n")
+        repeat(depth + 1) { append("  ") }
+        append("content: $content\n")
+    }
 }
 
 object CustomSerializer: BinarySerializer<CustomObject> {
