@@ -5,16 +5,10 @@ plugins {
 }
 
 group = "net.cacheux.bytonio"
-version = "0.0.2"
+version = "0.0.3"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
 kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
-    }
+    jvmToolchain(libs.versions.java.get().toInt())
 }
 
 dependencies {

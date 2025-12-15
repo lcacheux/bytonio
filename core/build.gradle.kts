@@ -5,9 +5,10 @@ plugins {
 }
 
 group = "net.cacheux.bytonio"
-version = "0.0.2"
+version = "0.0.3"
 
 kotlin {
+    jvmToolchain(libs.versions.java.get().toInt())
 
     androidLibrary {
         namespace = "net.cacheux.bytonio.core"
